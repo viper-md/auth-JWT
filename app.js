@@ -6,11 +6,42 @@ let auth = require("./config/auth.js")();
 let users = require("./app/model/users.js");
 let User=require("./app/model/database.js");
 let cfg = require("./config/config.js");
+let api=express.Router();
 let app = express();
 let port=8080;
+
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(auth.initialize());
+app.use('/api',api);
+
+api.post('/register',function(req,res){
+	if(!req.body.email || !req.body.password){
+		res.send("do something");
+	}
+	else{
+		let newuser=User.build({
+			email:req.body.email,
+			password:req.body.password
+		});
+	newuser.save().then(function(saveduser){
+		res.send(saveduser.email+"is saved in db");
+	}).catch(function(error){
+		res.send(error);
+	});
+	}
+});
+
+api.get('/list',function(req,res){
+	
+		User.findAll().then(function(users){
+			res.json(users);
+		}).catch(function(error){
+				res.send(error);
+		});
+		
+
+});
 
 app.get("/", function(req, res) {
 res.json({status: "My API is alive!"});
