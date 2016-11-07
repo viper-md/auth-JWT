@@ -4,6 +4,7 @@ let bodyParser = require("body-parser");
 let jwt = require("jwt-simple");
 let auth = require("./config/auth.js")();
 let users = require("./app/model/users.js");
+let User=require("./app/model/database.js");
 let cfg = require("./config/config.js");
 let app = express();
 let port=8080;
@@ -14,7 +15,20 @@ app.use(auth.initialize());
 app.get("/", function(req, res) {
 res.json({status: "My API is alive!"});
 });
+app.post("/login",function(req,res){
+	let email=req.body.email;
+	let password=req.body.password;
+	User.findOne({where: {email : email , password : password }  }).then(function (user) {
+		if(user){
+    	res.send("true");
+		}
+		else 
+		res.sendStatus(401);
+});
+	//find in databse
+	// if exsit , check the password .else error. 
 
+});
 app.get("/user", auth.authenticate() , function(req,res){
 	res.json(users[req.user.id]);
 
