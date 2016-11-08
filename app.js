@@ -8,19 +8,22 @@ let User=require("./app/model/database.js");
 let cfg = require("./config/config.js");
 let api=express.Router();
 let app = express();
-let port=8080;
+let port = process.env.PORT || 3000
 
+//middle wares
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(auth.initialize());
 app.use('/api',api);
+
+//routes
 
 api.post('/register',function(req,res){
 	if(!req.body.email || !req.body.password){
 		res.send("do something");
 	}
 	else{
-		let newuser=User.build({
+		let newuser= User.build({
 			email:req.body.email,
 			password:req.body.password
 		});

@@ -1,5 +1,6 @@
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize('postgres://mukul:newPassword@localhost:5432/mukul');
+var bcrypt = require('bcrypt');
 
 var User = sequelize.define('user', {
   email: {
@@ -10,9 +11,18 @@ var User = sequelize.define('user', {
   password: {
     type: Sequelize.STRING
   }
-}, {
-  freezeTableName: true // Model tableName will be the same as the model name
+},
+
+ {
+    
+    freezeTableName: true // Model tableName will be the same as the model name
 });
+ 
+
+//dummy data for testing 
+
+module.exports=User;
+
 
 User.sync({force: true}).then(function () {
   // Table created
@@ -21,4 +31,4 @@ User.sync({force: true}).then(function () {
     password: 'mukuldev'
   });
 });
-module.exports=User;
+
