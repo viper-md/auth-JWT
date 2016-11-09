@@ -8,3 +8,7 @@ To get the token:
 To view the user using token granted before :
   curl -H   'Authorization: JWT token ' localhost:8080/user
 
+uri : 
+register : http://localhost:3000/api/register
+login(token) : http://localhost:3000/api/login
+profile : http://localhost:3000/api/profile

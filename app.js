@@ -30,18 +30,17 @@ app.use('/api',api);
 
 function generateToken(user) {  
 //	res.json("woring"+ user);
-
-	
-  return jwt.sign(user,cfg.jwtSecret, {
-    expiresIn: 10080 // in seconds
+	 return jwt.sign(user,cfg.jwtSecret, {
+    	expiresIn: 10080 // in seconds
   });
 }
+
 function setUserInfo(request) {
   let getUserInfo = {
-     id: request.id,
-    email: request.email,
-	password:request.password,
-     
+		id: request.id,
+		email: request.email,
+		password:request.password,
+		
   };
 
   return getUserInfo;
@@ -62,13 +61,8 @@ api.post("/login",function(req,res){
 			let userinfo=setUserInfo(user);
 			//res.send(userinfo);
 			res.json({token : generateToken(userinfo)});
-//console.log(payload);
-			 
-			// res.send(user);
-			//let u=user;
-			//let token = generateToken(user);r
-    	
-		}
+			//console.log(payload);
+		 }
 		
 		}).catch(function(error){
 			res.send(error);
@@ -79,24 +73,25 @@ api.post("/login",function(req,res){
 });
 
 api.post('/register',function(req,res){
-	if(!req.body.email || !req.body.password){
-		res.send("do something");
-	}
-	else{
-		let newuser= User.build({
-			email:req.body.email,
-			password:req.body.password
-		});
-		
-	newuser.save().then(function(saveduser){
-			//res.json(saveduser);
-		 	 res.json("saved");
-		
 	
-}).catch(function(error){
-		res.send(error);
-	});
-	}
+		if(!req.body.email || !req.body.password){
+			res.send("ERROR");
+		}
+		else{
+			let newuser= User.build({
+				email:req.body.email,
+				password:req.body.password
+			});
+			
+		newuser.save().then(function(saveduser){
+				//res.json(saveduser);
+				res.json("saved");
+			
+		
+	}).catch(function(error){
+			res.send(error);
+		});
+		}
 });
 
 api.get('/list',function(req,res){
@@ -142,10 +137,7 @@ app.get("/", function(req, res) {
 
 
 
-api.get("/user",  function(req,res){
-	res.send(users[req.user.id]);
-
-});
+ 
 
 /*
 app.post("/token", function(req, res) {
