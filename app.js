@@ -55,7 +55,7 @@ api.get("/check",requireAuth,function(req,res){
 api.post("/login",function(req,res){
 	let email=req.body.email;
 	let password=req.body.password;
-	User.findOne( {email : email , password : password }  ).then(function (user) {
+	User.findOne( {where :{email : email , password : password }}  ).then(function (user) {
 		if(user){
 			
 			let userinfo=setUserInfo(user);
@@ -63,9 +63,10 @@ api.post("/login",function(req,res){
 			res.json({token : generateToken(userinfo)});
 			//console.log(payload);
 		 }
+		 res.send("not found");
 		
 		}).catch(function(error){
-			res.send(error);
+			return res.send(error);
 		});
 	//find in databse
 	// if exsit , check the password .else error. 
@@ -162,7 +163,7 @@ res.sendStatus(401);
 */
 app.listen(port, function() {
 console.log("running at port" + port);
-//console.log(payload);
+ 
 });
 
 module.exports = app;
