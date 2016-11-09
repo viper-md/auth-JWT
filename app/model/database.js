@@ -28,7 +28,7 @@ User.sync({force: true}).then(function () {
   // Table created
   return User.create({
     email: 'mukul@mail.com',
-    password: 'mukuldev'
+    password: 'mukuldev' 
   });
 });
 

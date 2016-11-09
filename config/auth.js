@@ -2,6 +2,7 @@
 let passport = require("passport");
 let passportjwt = require("passport-jwt");
 let users = require("../app/model/users.js");
+let User = require("../app/model/database");
 let cfg = require("./config.js");
 let ExtractJwt = passportjwt.ExtractJwt;
 let Strategy = passportjwt.Strategy;
